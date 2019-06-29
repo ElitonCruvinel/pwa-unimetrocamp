@@ -1,41 +1,44 @@
 <div class="container">
-        <mat-card>
-            <form>
-                <mat-form-field class="full-width">
-                    <input matInput placeholder="Id da task">
-                </mat-form-field>
-                <mat-form-field class="full-width">
-                    <input matInput placeholder="Titulo da task">
-                </mat-form-field>
-                <mat-form-field class="full-width">
-                    <input matInput placeholder="Descrição">
-                </mat-form-field>
-                <mat-form-field class="full-width">
-                    <input matInput [matDatepicker]="picker" placeholder="Data da task">
-                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                    <mat-datepicker #picker></mat-datepicker>
-                </mat-form-field>
-                <div class="center-text">
-                    <mat-checkbox color="primary">Concluido</mat-checkbox>
-                </div>
-                <mat-form-field class="full-width">
-                    <mat-label>Grau de prioridade</mat-label>
-                    <mat-select>
-                        <mat-option value="Baixa">
-                            Baixa
-                        </mat-option>
-                        <mat-option value="Media">
-                            Media
-                        </mat-option>
-                        <mat-option value="Alta">
-                            Alta
-                        </mat-option>
-                    </mat-select>
-                </mat-form-field>
-            </form>
-            <mat-card-actions class="center-text">
-                <button mat-raised-button color="primary" class="full-width" (click)="doRequest()">CADASTRAR</button>
-            </mat-card-actions>
-        </mat-card>
-    </div>
-    <ngx-loading [show]="loading"></ngx-loading>
+    <mat-card>
+        <form [formGroup]="taskForm">
+            <mat-form-field class="full-width">
+                <input matInput placeholder="Id da task" formControlName="_id" type="number">
+                <button mat-button *ngIf="taskForm.controls['_id'].value" matSuffix mat-icon-button (click)="getTask(taskForm.controls['_id'].value)">
+                    <mat-icon>search</mat-icon>
+                </button>
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <input matInput placeholder="Titulo da task" formControlName="title">
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <input matInput placeholder="Descrição" formControlName="description">
+            </mat-form-field>
+            <mat-form-field class="full-width">
+                <input matInput [matDatepicker]="picker" placeholder="Data da task" formControlName="creationDate" [readonly]="true">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <div class="center-text">
+                <mat-checkbox color="primary" formControlName="completed">Concluido</mat-checkbox>
+            </div>
+            <mat-form-field class="full-width">
+                <mat-label>Grau de prioridade</mat-label>
+                <mat-select formControlName="priority">
+                    <mat-option value="1">
+                        Baixa
+                    </mat-option>
+                    <mat-option value="2">
+                        Media
+                    </mat-option>
+                    <mat-option value="3">
+                        Alta
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </form>
+        <mat-card-actions class="center-text">
+            <button mat-raised-button color="primary" class="full-width" (click)="doRequest()" [disabled]="!taskForm.valid">CADASTRAR</button>
+        </mat-card-actions>
+    </mat-card>
+</div>
+<ngx-loading [show]="loading"></ngx-loading>

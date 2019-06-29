@@ -23,6 +23,8 @@ import { MatSidenavModule, MatTabsModule, MatInputModule, MatDatepickerModule, M
         } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxLoadingModule,ngxLoadingAnimationTypes } from 'ngx-loading';
+import { HttpClientModule } from '@angular/common/http';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   exports: [
@@ -95,7 +97,9 @@ export class MaterialModule {}
     }),
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    {provide: MAT_DATE_LOCALE, useValue: 'en-GB'}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
